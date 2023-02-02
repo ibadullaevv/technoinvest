@@ -1,0 +1,124 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <header class="header1">
+
+        <div class="tt-header">
+            <div class="container">
+                <div class="top-inner clearfix">
+                    <div class="logo pull-left main-logo"><a href="index.html"><img src="assets/images/logo.png"
+                                                                                    class="img-responsive" alt=""></a>
+                    </div>
+                    <a class="responsive_logo" href="index.html"><img src="assets/images/logo.png" alt=""></a>
+                    <div class="cmn-toggle-switch"><span></span></div>
+                </div>
+                {% include 'section/header.html' %}
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block content %}
+    <div id="content-wrapper">
+        <!--================ Banner Area =================-->
+        <div class="banner">
+            <div class="container">
+                <div class="row">
+{#                    <h3 class="tt-title">{{ category.title }}</h3>#}
+                    <h3 class="tt-title">Qidiruv natijalari</h3>
+                </div>
+            </div>
+        </div>
+        <!--================ End Banner Area =================-->
+        <!--================ Breadcrumb =================-->
+        <div class="container">
+            <div class="row">
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+{#                        <li><i class="icofont icofont-double-right"></i></li>#}
+{##}
+{#                        <li class="active"><a href="#">{{ category.title }}</a></li>#}
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--================ End Breadcrumb =================-->
+        <!--================ Services Details =================-->
+        <div class="cellpadding service_details">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-12 col-md-4 col-md-push-8 col-lg-3 col-lg-push-9">
+                        <aside class="blogAside">
+                            <ul class="categoryList normall">
+                                {% for f in category_list %}
+                                    {% for i in f.children.all %}
+                                        <li>
+                                            <a href="{% url 'misc:articles_by_category' i.id %}">{{ i.title }}
+                                                <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+                                        </li>
+                                    {% endfor %}
+
+                                {% endfor %}
+                            </ul>
+
+                        </aside>
+                    </div>
+                    <div class="col-sm-12 col-md-8 col-md-pull-4 col-lg-9 col-lg-pull-3">
+                        <div class="mainServicesContent">
+                            <div class="section_1">
+                                <h3 class="tt-title"> {{ category.title }}</h3>
+                                <div class="empty-space lg-10 sm-10 xs-10"></div>
+
+
+                                <div class="empty-space lg-30 sm-40 xs-40"></div>
+                                <div class="simple-text">
+                                    <p>{{ category.description }}</p>
+                                </div>
+
+                            </div>
+                        {% if object_list %}
+                            {% for article in object_list %}
+                                <div class="empty-space lg-30 sm-40 xs-40"></div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <img src="{{ article.image.url }}" alt="Image 6"
+                                             class="img-responsive">
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="empty-space sm-20 xs-25"></div>
+                                        <h3 class="tt-title">{{ article.title }}</h3>
+                                        <ul class="Building_Renovation">
+                                            <li>
+                                                {#                                            <i class="fa fa-angle-double-right"></i>#}
+                                                {{ article.body|safe }}
+
+                                            </li>
+                                            <h4>
+                                                <a href="{% url 'misc:article_detail' article.id %}">Batafsil<span><i
+                                                        class="icofont icofont-rounded-right"></i></span>
+                                                </a>
+                                            </h4>
+
+                                        </ul>
+
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        {% else %}
+                        <h1>Topilmadi</h1>
+                        {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {% include 'section/footer.html' %}
+    </div>
+    <!--================ End Services Details =================-->
+
+    </div>
+{% endblock %}

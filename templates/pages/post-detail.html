@@ -1,0 +1,130 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block header %}
+    <header class="header1">
+
+        <div class="tt-header">
+            <div class="container">
+                <div class="top-inner clearfix">
+                    <div class="logo pull-left main-logo"><a href="index.html"><img
+                            src="{% static 'assets/images/logo.png' %}"
+                            class="img-responsive" alt=""></a>
+                    </div>
+                    <a class="responsive_logo" href="index.html"><img src="{% static 'assets/images/logo.png' %}"
+                                                                      alt=""></a>
+                    <div class="cmn-toggle-switch"><span></span></div>
+                </div>
+                {% include 'section/header.html' %}
+            </div>
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block content %}
+    <div id="content-wrapper">
+        <!--================ Banner Area =================-->
+        <div class="banner">
+            <div class="container">
+                <div class="row">
+                    <h3 class="tt-title">{{ post.title }}</h3>
+                </div>
+            </div>
+        </div>
+        <!--================ End Banner Area =================-->
+        <!--================ Breadcrumb =================-->
+        <div class="container">
+            <div class="row">
+                <div class="breadcrumb">
+                    <ul>
+                        <li><a href="/">Bosh sahifa</a></li>
+                        <li><i class="icofont icofont-double-right"></i></li>
+{#                        <li>#}
+{#                            <a href="{% url 'misc:articles_by_category' article.category.id %}">{{ article.category.title }}</a>#}
+{#                        </li>#}
+{#                        <li><i class="icofont icofont-double-right"></i></li>#}
+                        <li class="active"><a href="#">{{ post.title }}</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <!--================ End Breadcrumb =================-->
+        <!--================ Latest Blogs =================-->
+        <div class="latest_blog_01 blog_posts blog_small cellpadding">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-8 col-sm-8 co-xs-12 blogcontent">
+                        <div class="costruction_project">
+
+                            <div class="Guidlines">
+                                <div class="direction">
+                                    <h6>dfvdfv<span>{{ post.publish }}</span></h6>
+                                </div>
+                                <h4>{{ post.title }}</h4>
+                                <p>{{ post.body|safe }}</p>
+                                <div class="empty-space lg-15 sm-15 xs-15"></div>
+
+                            </div>
+                            {#                                                        <div class="main-class">#}
+                            {#                                <div class="image image-opacity-on-hover image-zoom-on-hover">#}
+                            {#                                    <img src="{% static 'assets/images/blog/blog_1.jpg' %}" class="img-responsive" alt="Image 1">#}
+                            {#                                </div>#}
+                            {#                                <div class="icon-class">#}
+                            {#                                    <div class="icon1">#}
+                            {#                                        <div class="icon">#}
+                            {#                                            <i class="icofont icofont-heart"></i>#}
+                            {#                                        </div>#}
+                            {#                                        <h6>85</h6>#}
+                            {#                                    </div>#}
+                            {#                                    <div class="icon1">#}
+                            {#                                        <div class="icon">#}
+                            {#                                            <i class="icofont icofont-speech-comments"></i>#}
+                            {#                                        </div>#}
+                            {#                                        <h6>25</h6>#}
+                            {#                                    </div>#}
+                            {#                                </div>#}
+                            {#                            </div>#}
+
+                        </div>
+
+
+                    </div>
+                    <div class="col-md-4 col-sm-12 sidebar_right">
+                        <aside class="sidebar">
+                            <div class="search">
+                                <form action="{% url 'misc:search_results' %}" method="get">
+                                    <div class="form-group">
+                                        <label for="search">Qidiruv</label>
+                                        <input type="text" name="q" id="search">
+                                        <button type="submit"><i class="icofont icofont-search"></i></button>
+                                    </div>
+                                </form>
+                            </div>
+                            {% for cat in category_list %}
+                                <div class="Categories">
+
+                                    <a href="{% url 'misc:articles_by_category' cat.id %}"><h4>{{ cat.title }}
+                                        ({{ cat.article_set.count }})</h4></a>
+                                    <ul>
+                                        {% for sub_cat in cat.children.all %}
+                                            <li><i class="icofont icofont-rounded-right"></i> <a
+                                                    href="{% url 'misc:articles_by_category' sub_cat.id %}">{{ sub_cat.title }}
+                                                ({{ sub_cat.article_set.count }})</a>
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endfor %}
+
+                        </aside>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--================ End Latest Blogs =================-->
+
+        {% include 'section/footer.html' %}
+
+    </div>
+{% endblock %}

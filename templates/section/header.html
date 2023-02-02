@@ -1,0 +1,159 @@
+{% load static %}
+{% load mptt_tags %}
+{% load i18n %}
+
+{#<div class="toggle-block">#}
+{#    <div class="toggle-block-container">#}
+{#        <nav class="main-nav clearfix">#}
+{#            <ul>#}
+{#                <li class="active parent">#}
+{#                    <a href="index.html"><span>Home<i#}
+{#                            class="menu-toggle fa fa-angle-down"></i></span></a>#}
+{#                    <ul>#}
+{#                        <li><a href="index2.html"><span>Home Two</span></a></li>#}
+{#                        <li><a href="index3.html"><span>Home Three</span></a></li>#}
+{#                        <li><a href="index4.html"><span>Home Four</span></a></li>#}
+{#                        <li><a href="index5.html"><span>Home Five</span></a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li class="parent">#}
+{#                    <a href="aboutus_01.html"><span>About Us<i class="menu-toggle fa fa-angle-down"></i></span></a>#}
+{#                    <ul>#}
+{#                        <li><a href="aboutus_02.html"><span>About Us 02</span></a></li>#}
+{#                        <li><a href="company_overview.html"><span>Company Overview</span></a></li>#}
+{#                        <li><a href="company_history.html"><span>Company History</span></a></li>#}
+{#                        <li><a href="career.html"><span>Career</span></a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li class="parent">#}
+{#                    <a href="index3.html#"><span>Pages <i#}
+{#                            class="menu-toggle fa fa-angle-down"></i></span></a>#}
+{#                    <ul>#}
+{#                        <li><a href="404.html"><span>404 Page</span></a></li>#}
+{#                        <li><a href="maintenance.html"><span>Maintenance Page</span></a></li>#}
+{#                        <li><a href="comingsoon.html"><span>Coming Soon Page</span></a></li>#}
+{#                        <li><a href="faq.html"><span>Faq</span></a></li>#}
+{#                        <li><a href="team.html"><span>Team</span></a></li>#}
+{#                        <li><a href="testimonial.html"><span>Testimonial</span></a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li class="parent">#}
+{#                    <a href="services_01.html"><span>Services <i#}
+{#                            class="menu-toggle fa fa-angle-down"></i></span></a>#}
+{#                    <ul>#}
+{#                        <li class="parent"><a href="services_02.html"><span> Service Two</span></a></li>#}
+{#                        <li class="parent"><a#}
+{#                                href="commercial_building.html"><span> Commercial Building</span></a>#}
+{#                        </li>#}
+{#                        <li class="parent"><a href="construction_services.html"><span> Construction Services</span></a>#}
+{#                        </li>#}
+{#                        <li class="parent"><a#}
+{#                                href="house_renovation.html"><span> House Renovation</span></a></li>#}
+{#                        <li class="parent"><a#}
+{#                                href="interior_designing.html"><span> Interior Designing</span></a></li>#}
+{#                        <li class="parent"><a href="roofing.html"><span> Roofing</span></a></li>#}
+{#                        <li class="parent"><a href="architecture.html"><span> Architecture</span></a>#}
+{#                        </li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li class="parent">#}
+{#                    <a href="project_2col.html"><span> Projects <i#}
+{#                            class="menu-toggle fa fa-angle-down"></i></span></a>#}
+{#                    <ul>#}
+{#                        <li><a href="project_2col.html"><span>Project 2 Columns</span></a></li>#}
+{#                        <li><a href="project_3col.html"><span>Project 3 Columns</span></a></li>#}
+{#                        <li><a href="project_masonary.html"><span>Project Masonary</span></a></li>#}
+{#                        <li><a href="project_masonary_02.html"><span>Project Masonary 02</span></a></li>#}
+{#                        <li><a href="project_details.html"><span>Project Details</span></a></li>#}
+{#                        <li><a href="project_details2.html"><span>Project Details 02</span></a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li class="parent">#}
+{#                    <a href="blog_fullwidth.html"><span>Blog <i#}
+{#                            class="menu-toggle fa fa-angle-down"></i></span></a>#}
+{#                    <ul>#}
+{#                        <li><a href="blog_fullwidth.html"><span>Blog Fullwidth</span></a></li>#}
+{#                        <li><a href="blog_grid.html"><span>Blog Grid</span></a></li>#}
+{#                        <li><a href="blog_small.html"><span>Blog Small</span></a></li>#}
+{#                        <li><a href="blog_singlepost.html"><span>Blog Details</span></a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li class="parent">#}
+{#                    <a href="shop_home.html"><span>Shop<i#}
+{#                            class="menu-toggle fa fa-angle-down"></i></span></a>#}
+{#                    <ul>#}
+{#                        <li><a href="shop_details.html"><span>Shop Details</span></a></li>#}
+{#                        <li><a href="shop_cart.html"><span>Shop Cart</span></a></li>#}
+{#                    </ul>#}
+{#                </li>#}
+{#                <li class="last">#}
+{#                    <a href="contact_us.html"><span>Contact Us</span></a>#}
+{#                </li>#}
+{#            </ul>#}
+{#        </nav>#}
+{#    </div>#}
+{#</div>#}
+
+<div class="toggle-block">
+    <div class="toggle-block-container">
+        <nav class="main-nav clearfix">
+            <ul>
+                <li class="first active">
+                    <a href="/"><span>{% blocktrans %} Bosh sahifa {% endblocktrans %}</span></a>
+                </li>
+                {% recursetree category_list %}
+                    {% if node.is_leaf_node %}
+                        <li class="last">
+                            <a href="{% url 'misc:articles_by_category' node.id %}"><span>{{ node.title }}</span></a>
+                        </li>
+                    {% else %}
+                        <li class="parent">
+                            <a href="#"><span>{{ node.title }}<i class="menu-toggle fa fa-angle-down"></i></span></a>
+                            <ul>
+                                {{ children }}
+                                {#                            <li><a href="shop_details.html"><span>Shop Details</span></a></li>#}
+                            </ul>
+                        </li>
+                    {% endif %}
+
+                {% endrecursetree %}
+
+
+                {#                <li class="parent">#}
+                {#                    {% get_current_language as LANGUAGE_CODE %}#}
+                {#                    {% get_available_languages as LANGUAGES %}#}
+                {#                    {% get_language_info_list for LANGUAGES as languages %}#}
+                {#                    <a href="/{{ LANGUAGE_CODE }}"><span>{{ LANGUAGE_CODE }}<i class="menu-toggle fa fa-angle-down"></i></span></a>#}
+                {#                    <ul>#}
+                {#                        {% for lang in languages %}#}
+                {#                            <li class="parent"><a href="/{{ lang.code }}"><span>{{ lang.code }}</span></a></li>#}
+                {#                        {% endfor %}#}
+                {#                    </ul>#}
+                {#                </li>#}
+
+
+{#                <li class="last">#}
+{#                    <a>#}
+{#                        <form action="{% url 'set_language' %}" method="post">{% csrf_token %}#}
+{#                            <input name="next" type="hidden" value="{{ redirect_to }}">#}
+{#                            <select name="language" class="select-lang">#}
+{#                                {% get_current_language as LANGUAGE_CODE %}#}
+{#                                {% get_available_languages as LANGUAGES %}#}
+{#                                {% get_language_info_list for LANGUAGES as languages %}#}
+{#                                {% for language in languages %}#}
+{#                                    <option value="{{ language.code }}"{% if language.code == LANGUAGE_CODE %}#}
+{#                                            selected{% endif %}>#}
+{#                                        {{ language.code }}#}
+{#                                    </option>#}
+{#                                {% endfor %}#}
+{#                            </select>#}
+{#                            <input type="submit" class="select-lang" value="Go">#}
+{#                        </form>#}
+{#                    </a>#}
+{#                </li>#}
+
+            </ul>
+
+        </nav>
+    </div>
+</div>
